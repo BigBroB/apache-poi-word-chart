@@ -2,10 +2,8 @@ package com.geesanke.demo.util;
 
 import cn.hutool.core.util.ReflectUtil;
 import com.geesanke.demo.data.LineChartRenderData;
-import org.apache.poi.ooxml.POIXMLDocumentPart;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.xddf.usermodel.chart.XDDFChartData;
 import org.apache.poi.xddf.usermodel.chart.XDDFLineChartData;
@@ -15,7 +13,6 @@ import org.openxmlformats.schemas.drawingml.x2006.chart.*;
 import org.openxmlformats.schemas.drawingml.x2006.main.STSchemeColorVal;
 
 import java.io.IOException;
-import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -25,6 +22,10 @@ import java.util.List;
 public class LineChartRenderUtil {
 
     public static void renderChart(XWPFChart chart, LineChartRenderData data) {
+        // 修改图表标题
+        if (data.getTitle() != null) {
+            chart.setTitleText(data.getTitle());
+        }
         // 获取图表中的 单个图 之所以是数组 可能存在复合图表
         List<XDDFChartData> series = chart.getChartSeries();
         for (XDDFChartData chartData : series) {
