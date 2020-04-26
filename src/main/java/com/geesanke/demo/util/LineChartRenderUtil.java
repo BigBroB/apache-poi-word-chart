@@ -152,7 +152,7 @@ public class LineChartRenderUtil {
     }
 
     public static void renderExcel(XWPFChart chart, LineChartRenderData data) throws IOException {
-        Workbook wb = new XSSFWorkbook();
+        XSSFWorkbook wb = new XSSFWorkbook();
         Sheet sheet = wb.createSheet("Sheet1");
         List<LineChartRenderData.LineData> lines = data.getLines();
         //根据数据创建excel第一行标题行
@@ -173,25 +173,26 @@ public class LineChartRenderUtil {
             }
 
         }
-        List<POIXMLDocumentPart> pxdList = chart.getRelations();
-        if (pxdList != null && pxdList.size() > 0) {
-            for (int i = 0; i < pxdList.size(); i++) {
-                // 判断为sheet再去进行更新表格数据
-                if (pxdList.get(i).toString().contains("sheet")) {
-                    POIXMLDocumentPart xlsPart = pxdList.get(i);
-                    OutputStream xlsOut = xlsPart.getPackagePart().getOutputStream();
-                    try {
-                        wb.write(xlsOut);
-                        xlsOut.close();
-                        break;
-                    } finally {
-                        if (wb != null) {
-                            wb.close();
-                        }
-                    }
-                }
-            }
-        }
+        chart.setWorkbook(wb);
+//        List<POIXMLDocumentPart> pxdList = chart.getRelations();
+//        if (pxdList != null && pxdList.size() > 0) {
+//            for (int i = 0; i < pxdList.size(); i++) {
+//                // 判断为sheet再去进行更新表格数据
+//                if (pxdList.get(i).toString().contains("sheet")) {
+//                    POIXMLDocumentPart xlsPart = pxdList.get(i);
+//                    OutputStream xlsOut = xlsPart.getPackagePart().getOutputStream();
+//                    try {
+//                        wb.write(xlsOut);
+//                        xlsOut.close();
+//                        break;
+//                    } finally {
+//                        if (wb != null) {
+//                            wb.close();
+//                        }
+//                    }
+//                }
+//            }
+//        }
     }
 
 }
